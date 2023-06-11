@@ -1,5 +1,7 @@
 import boardList from "../db/data.json";
 import { Link } from "react-router-dom";
+import imgLogo from './img/logo.png'
+import styles from "./BoardDetail.module.css";
 
 export default function BoardList() {
 
@@ -28,8 +30,8 @@ function Header() {
     return (
         <header>
             <div class="logo">
-                <img src="./component/img/logo.png"></img>
-                <span class="title">카카오 클라우드 스쿨</span>
+                <img src={imgLogo}></img>
+                <span class="title" className={styles.logoTitle}>카카오 클라우드 스쿨</span>
             </div>
         </header>
 
