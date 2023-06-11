@@ -7,12 +7,26 @@
     --grey-dark-color : #909090;
     --grey-light-color : #e0e0e0;
     --orange-color : #faa945;
+
+     /* 크기 */
+     --padding : 12px;
+     --avatar-size : 36px;
+ 
+ 
+     /* 글씨크기 */
+     --font-large : 40px;
+     --font-medium : 14px;
+     --font-small : 12px;
+     --font-micro : 10px;
 }
 
+body{
+    padding : 0px;
+    margin : 0;
+}
 
-
-.logo .title {
-    font-size: ;
+.logoTitle {
+    font-size: var(--font-large)
 }
 
 
