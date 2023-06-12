@@ -1,16 +1,22 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./BoardDetail.module.css"
+import { useParams } from "react-router-dom";
+import { homeDomain, dataDomain } from "./domain";
 
 export default function CommentSection({ comments }) {
-  const [commentList, setCommentList] = useState(comments);
+
+  const [commentList, setCommentList] = useState([]);
   const commentContent = useRef(null);
   const [toggleComment, setToggleComment] = useState("on");
 
-//   console.log(commentList);
+
+  useEffect(()=>{
+    setCommentList(comments);
+  },[comments])
 
   let commentsRows = null;
   if (commentList) {
-      commentsRows = commentList.map((commentList) =>
+      commentsRows = Array.from(commentList).map((commentList) =>
           <tr key={commentList.no}>
               <td>{commentList.no}</td>
               <td>{commentList.contents}</td>
@@ -19,15 +25,31 @@ export default function CommentSection({ comments }) {
       )
   }
 
+  const {id} = useParams();
+  
   function handleDeleteComment(commentNo) {
-    let password = prompt("삭제를 위해서는 비밀번호를 입력해야 합니다.");
-    // if (password === comments[Number(event.target.value)].pw) {
-    //   let newComments = comments.filter((one) => one.no !== Number(event.target.value));
-    if (password === "1234") {
-      const newComments = commentList.filter(
-        (commentList) => commentList.no !== commentNo
-      );
-      setCommentList(newComments);
+    const password = prompt("비밀번호를 입력하세요.");
+    if(password){
+        const requestOptions = {
+            method : "DELETE",
+        };
+        console.log(`${dataDomain}/bulletinBoard/${id}/comments/${commentNo}`);
+        fetch(`${dataDomain}/bulletinBoard/${id}/comments/${commentNo}`,requestOptions)
+        //.then(res=>res.json())
+        .then(res=>res.json())
+        .then(data => {
+            console.log(data.success);
+            // if(data.success){
+                const newComments = commentList.filter((comment) => comment.no !== commentNo);
+                setCommentList(newComments);
+            //   } else {
+            //     alert("댓글 삭제에 실패했습니다.");
+            //   }
+            }
+        )
+        .catch(error=>{
+            console.error("댓글 삭제 오류 :",error);
+        })
     }
   }
 
@@ -38,6 +60,7 @@ export default function CommentSection({ comments }) {
       contents: commentContent.current.value,
       pw: 1234,
     };
+    debugger
     commentContent.current.value = "";
     setCommentList([...commentList, newComment]);
   }
@@ -72,7 +95,7 @@ export default function CommentSection({ comments }) {
           <textarea cols="95" rows="5" ref={commentContent}></textarea>
         </form>
 
-        댓글보이기<input type="radio" name="toggleComment" value="on" checked={toggleComment==="on"}  onChange={(event) => { toggleComments(event); console.log(toggleComment); }}></input>
+        댓글보이기<input type="radio" name="toggleComment" value="on" checked={toggleComment==="on"}  onChange={toggleComments}></input>
         댓글감추기 <input type="radio" name="toggleComment" value="off" checked={toggleComment==="off"} onChange={toggleComments}></input>
         <input type="text" name="pw" value="패스워드를 입력하세요"></input>
        </div>
