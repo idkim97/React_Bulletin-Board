@@ -26,12 +26,14 @@ body{
 }
 
 .logoTitle {
-    font-size: var(--font-large)
+    font-size: var(--font-large);
+    padding : var(--padding);
 }
 
-
-
-
-.commentInVisible {
+.comment {
+    width: 800px;
+    border: none; 
+}
+.commentInvisible {
     display: none;
  }
