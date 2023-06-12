@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Single+Day&display=swap');
+
+
+
 .App {
   text-align: center;
+  font-family: 'Poor Story', 'Single Day', cursive;
 }
 
 .App-logo {
