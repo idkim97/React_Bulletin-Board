@@ -2,10 +2,15 @@ import boardList from "../db/data.json";
 import { Link } from "react-router-dom";
 import imgLogo from './img/logo.png'
 import styles from "./BoardDetail.module.css";
+import { dataDomain } from "./domain";
+import { useEffect, useState } from "react";
 
 export default function BoardList() {
 
-    const list = boardList.bulletinBoard.map(board => (
+
+    const [list,setList] = useState([]);
+
+    const info = list.map(board=>(
         <tr key={board.id}>
             <td>{board.id}</td>
             <td><Link to={'/detail/' + board.id} state={{ item: board }}> {board.title}</Link></td>
@@ -15,10 +20,18 @@ export default function BoardList() {
         </tr>
     ))
 
+    // json서버에서 json데이터 받아온다
+    useEffect(()=>{
+        fetch(`${dataDomain}/bulletinBoard`)
+        .then(res=>{return res.json()})
+        .then(data=>{setList(data)}
+        );
+    },[]);
+
     return (
         <div>
             <Header></Header>
-            <Board list={list}></Board>
+            <Board info={info}></Board>
         </div>
 
     )
@@ -38,7 +51,7 @@ function Header() {
     )
 }
 
-function Board({list}) {
+function Board({info}) {
     return (
         <>
             <table>
@@ -51,7 +64,7 @@ function Board({list}) {
                         <th>조회수</th>
                     </tr>
                 </thead>
-                <tbody>{list}</tbody>
+                <tbody>{info}</tbody>
             </table>
 
             <button className="enrollBtn"> 등록 </button>
