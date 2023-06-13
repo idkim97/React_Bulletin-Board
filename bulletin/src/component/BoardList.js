@@ -1,9 +1,12 @@
-import boardList from "../db/data.json";
 import { Link } from "react-router-dom";
 import imgLogo from './img/logo.png'
-import styles from "./BoardDetail.module.css";
+import styles from "./BoardList.module.css";
 import { dataDomain } from "./domain";
 import { useEffect, useState } from "react";
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Table from 'react-bootstrap/Table';
 
 export default function BoardList() {
 
@@ -11,9 +14,9 @@ export default function BoardList() {
     const [list,setList] = useState([]);
 
     const info = list.map(board=>(
-        <tr key={board.id}>
+        <tr key={board.id} >
             <td>{board.id}</td>
-            <td><Link to={'/detail/' + board.id} state={{ item: board }}> {board.title}</Link></td>
+            <td><Link to={'/detail/' + board.id} state={{ item: board }} className={styles.tr}> {board.title}</Link></td>
             <td>{board.name}</td>
             <td>{board.date}</td>
             <td>{board.view}</td>
@@ -42,7 +45,7 @@ export default function BoardList() {
 function Header() {
     return (
         <header>
-            <div class="logo">
+            <div class="logo" className={styles.title}>
                 <img src={imgLogo}></img>
                 <span class="title" className={styles.logoTitle}>카카오 클라우드 스쿨</span>
             </div>
@@ -54,7 +57,7 @@ function Header() {
 function Board({info}) {
     return (
         <>
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>글번호</th>
@@ -65,9 +68,9 @@ function Board({info}) {
                     </tr>
                 </thead>
                 <tbody>{info}</tbody>
-            </table>
+            </Table>
 
-            <button className="enrollBtn"> 등록 </button>
+            
         </>
     )
 }

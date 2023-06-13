@@ -1,0 +1,49 @@
+:root {
+    /* 색깔 */
+    --white-color : #fff;
+    --black-color : #140a00;
+    --blue-color : #045fd4;
+    --red-color : #ff0000;
+    --grey-dark-color : #909090;
+    --grey-light-color : #e0e0e0;
+    --orange-color : #faa945;
+
+     /* 크기 */
+     --padding : 12px;
+     --avatar-size : 36px;
+ 
+ 
+     /* 글씨크기 */
+     --font-large : 40px;
+     --font-medium : 14px;
+     --font-small : 12px;
+     --font-micro : 10px;
+}
+
+body{
+    padding : 0px;
+    margin : 0;
+}
+
+.title {
+    padding : 30px;
+}
+
+.tr {
+    text-decoration: none !important ;
+    color : var(--black-color);
+}
+
+.logoTitle {
+    font-size: var(--font-large);
+    padding : var(--padding);
+
+}
+
+.comment {
+    width: 800px;
+    border: none; 
+}
+.commentInvisible {
+    display: none;
+}
