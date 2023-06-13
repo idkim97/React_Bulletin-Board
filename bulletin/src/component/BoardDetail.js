@@ -1,48 +1,30 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import styles from "./BoardList.module.css"
 import CommentSection from "./CommentSection";
 import { homeDomain, dataDomain } from "./domain";
 import axios from "axios";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Table from 'react-bootstrap/Table';
+import styles from "./BoardDetail.module.css";
 
 
-function Header({title , view , onViewUpdate}){
-    return(
-        <>
-        <h5 onClick={onViewUpdate}>{title}</h5>
-        <hr />
-        </>
-    )
-}
-
-function Content({content}){
-    return(
-        <>
-            <p>{content}</p>
-            <hr/>
-        </>
-    )
-}
-
-function Table({title , date , contents}){
+function Detail({title , date , contents}){
     return (
-        <table border="1" >
+        <Table className={`${styles.detail} ${styles.centered}`} striped bordered hover>
             <tr>
                 <td>제목</td>
                 <td>{title}</td>
                 <td>작성일자</td>
                 <td>{date}</td>
             </tr>
-            <tr rowspan="3">
-                <td>{contents}</td>
-                <td>ㅋㅋ</td>
+            <tr>
+                <td>내용</td>
+                <td colSpan="3">{contents}</td>
             </tr> 
-        </table>
+        </Table>
     )
 }
-
-
 
 
 export default function BoardDetail() {
@@ -77,27 +59,14 @@ export default function BoardDetail() {
         return <div>오류: 게시물이 없습니다.</div>;
     }
 
-    const handleViewUpdate = async () => {
-        try{
-            const updatedView = {
-                ...board,
-                view : board.view+1,
-            };
-
-            await axios.patch(`${dataDomain}/bulletinBoard/${id}`, updatedView);
-            
-            setBoard(updatedView);
-            console.log(board.view);
-        }catch(error){
-            console.log("Error updating view",error);
-        }
-    }
+    
 
 
     return (
       <div>
+        {/* 제목, 내용 */}
+        <Detail title={board.title} date={board.date} contents={board.contents} ></Detail>
 
-        <Table title={board.title} date={board.date} contents={board.contents} ></Table>
         {/* 댓글 섹션 */}
         <CommentSection comments={board.comments}/>
 
